@@ -142,10 +142,10 @@ runs:
         #regex_blocked_status="\"blocked\"\s*:\s*([a-z]+)"
         regex="\"blocked\"\s*:\s*([a-z]+).*\"executable\".*?\"number\"\s*:\s*([0-9]+).*?\"url\"\s*:\s*\"(.*?)\""
         if [[ $BUILDJSON =~ $regex ]]; then
+          echo "build URL: " ${BUILDURL} ;
           if [[ $verbose == true ]]; then
             echo "blocked: " ${BLOCKED} ;
             echo "build number: " ${BUILDNUM} ;
-            echo "build URL: " ${BUILDURL} ;
           fi
           echo "Job URL retrieved"
           echo "--------------------------------------"
