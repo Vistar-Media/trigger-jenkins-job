@@ -139,6 +139,8 @@ runs:
         verbose=${{ inputs.verbose }}
         userName=${{ inputs.jenkins-username }}
         password=${{ inputs.jenkins-pat }}
+        startTimeSeconds=$(date +%s)
+        endTimeSeconds=$(date -d "+${timeoutValue} seconds" +%s)
         
         BUILDJSON='${{ steps.trigger-jenkins-job-using-api-1.outputs.buildjson }}'
         #regex_blocked_status="\"blocked\"\s*:\s*([a-z]+)"
