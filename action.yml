@@ -96,6 +96,7 @@ runs:
           echo "Queue URL Found."
           echo "--------------------------------------"
           QUEUEURL=${BASH_REMATCH[1]} ;
+          echo "queueurl=${QUEUEURL}" >> "$GITHUB_OUTPUT"
           if [[ $verbose == true ]]; then
             echo $QUEUEURL ; 
             echo "--------------------------------------"
@@ -118,6 +119,13 @@ runs:
           echo "--------------------------------------"
         fi
 
+        regex="\"blocked\"\\s*:\\s*([a-z]+).*\"executable\".*?\"number\"\\s*:\\s*([0-9]+).*?\"url\"\\s*:\\s*\"(.*?)\""
+        if [[ $BUILDJSON =~ $regex ]]; then
+          echo "blocked=${BASH_REMATCH[1]}" >> "$GITHUB_OUTPUT"
+          echo "buildnum=${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+          echo "buildurl=${BASH_REMATCH[3]}" >> "$GITHUB_OUTPUT"
+        fi
+
         {
           echo "buildjson<<EOF"
           echo "$BUILDJSON"
@@ -131,7 +139,7 @@ runs:
       with:
         refresh-message-position: true
         message-id: jenkins-url
-        message: "Jenkins Job started at: ${{ steps.trigger-jenkins-job-using-api-1.outputs.buildurl }}"
+        message: "Jenkins Job started at: ${{ steps.trigger-jenkins-job-using-api-1.outputs.buildurl || steps.trigger-jenkins-job-using-api-1.outputs.queueurl }}"
     - id: trigger-jenkins-job-using-api-2
       run: |
         pollTime=${{ inputs.poll-time }}
