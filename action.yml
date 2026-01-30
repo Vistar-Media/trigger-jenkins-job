@@ -139,13 +139,14 @@ runs:
         verbose=${{ inputs.verbose }}
         
         BUILDJSON='${{ steps.trigger-jenkins-job-using-api-1.outputs.buildjson }}'
-        BLOCKED=${{ steps.trigger-jenkins-job-using-api-1.outputs.blocked }}
-        BUILDNUM=${{ steps.trigger-jenkins-job-using-api-1.outputs.buildnum }}
-        BUILDURL=${{ steps.trigger-jenkins-job-using-api-1.outputs.buildurl }}
-        
         #regex_blocked_status="\"blocked\"\s*:\s*([a-z]+)"
         regex="\"blocked\"\s*:\s*([a-z]+).*\"executable\".*?\"number\"\s*:\s*([0-9]+).*?\"url\"\s*:\s*\"(.*?)\""
         if [[ $BUILDJSON =~ $regex ]]; then
+          BLOCKED=${BASH_REMATCH[1]} ;
+          BUILDNUM=${BASH_REMATCH[2]} ;
+          BUILDURL=${BASH_REMATCH[3]} ;
+          echo "blocked: " ${BLOCKED} ;
+          echo "build number: " ${BUILDNUM} ;
           echo "build URL: " ${BUILDURL} ;
           if [[ $verbose == true ]]; then
             echo "blocked: " ${BLOCKED} ;
