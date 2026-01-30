@@ -178,7 +178,7 @@ runs:
         sleep 2
         echo "Query Build Job Status"
         echo "--------------------------------------"
-        JOBSTATUSJSON=$(curl -s -X GET -u "$userName:$password"   "$BUILDURL/api/json?pretty=true")
+        JOBSTATUSJSON=$(curl -s -X GET -u "$userName:$password"   "$BUILDURL/api/json")
         if [[ $verbose == true ]]; then
           echo "JOBSTATUSJSON:"
           echo "--------------------------------------"
@@ -217,7 +217,7 @@ runs:
             #Get the status
             echo "Query Build Job Status"
             echo "--------------------------------------"
-            JOBSTATUSJSON=$(curl -s -X GET -u "$userName:$password"   "$BUILDURL/api/json?pretty=true")
+            JOBSTATUSJSON=$(curl -s -X GET -u "$userName:$password"   "$BUILDURL/api/json")
             regex="\"building\"\s*:\s*([a-z]+).*?\"result\"\s*:\s*\"?([a-zA-Z]+|null)\"?."
             if [[ $JOBSTATUSJSON =~ $regex ]]; then
               if [[ $verbose == true ]]; then
