@@ -137,6 +137,8 @@ runs:
         pollTime=${{ inputs.poll-time }}
         timeoutValue=${{ inputs.timeout-value }}
         verbose=${{ inputs.verbose }}
+        userName=${{ inputs.jenkins-username }}
+        password=${{ inputs.jenkins-pat }}
         
         BUILDJSON='${{ steps.trigger-jenkins-job-using-api-1.outputs.buildjson }}'
         #regex_blocked_status="\"blocked\"\s*:\s*([a-z]+)"
@@ -145,6 +147,7 @@ runs:
           BLOCKED=${BASH_REMATCH[1]} ;
           BUILDNUM=${BASH_REMATCH[2]} ;
           BUILDURL=${BASH_REMATCH[3]} ;
+          BUILDURL=${BUILDURL%/} ;
           echo "blocked: " ${BLOCKED} ;
           echo "build number: " ${BUILDNUM} ;
           echo "build URL: " ${BUILDURL} ;
