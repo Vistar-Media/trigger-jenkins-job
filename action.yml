@@ -198,6 +198,10 @@ runs:
         else
           echo "Build status NOT FOUND. Exiting script with error"
           echo "--------------------------------------"
+          echo "JOBSTATUSJSON raw:"
+          echo "--------------------------------------"
+          echo "$JOBSTATUSJSON"
+          echo "--------------------------------------"
           exit 1 
         fi
 
@@ -229,6 +233,10 @@ runs:
               RESULT=${BASH_REMATCH[2]} ;
             else
                 echo "Build status NOT FOUND. Exiting script with error"
+                echo "--------------------------------------"
+                echo "JOBSTATUSJSON raw:"
+                echo "--------------------------------------"
+                echo "$JOBSTATUSJSON"
                 echo "--------------------------------------"
                 exit 1 
             fi
